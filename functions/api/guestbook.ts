@@ -1,6 +1,6 @@
 // Cloudflare Pages Functions types are provided by @cloudflare/workers-types
 interface Env {
-  my_wedding: D1Database;
+  db: D1Database;
 }
 
 interface GuestbookEntry {
@@ -13,7 +13,7 @@ interface GuestbookEntry {
 // GET: 방명록 목록 조회
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
-    const { results } = await context.env.my_wedding
+    const { results } = await context.env.db
       .prepare(
         "SELECT id, author, message, date FROM guestbook ORDER BY created_at DESC"
       )
@@ -59,7 +59,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const id = crypto.randomUUID();
     const date = new Date().toISOString().split("T")[0];
 
-    await context.env.my_wedding
+    await context.env.db
       .prepare(
         "INSERT INTO guestbook (id, author, message, password, date) VALUES (?, ?, ?, ?, ?)"
       )

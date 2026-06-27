@@ -18,6 +18,8 @@ dist-ssr
 .env.production.local
 .env.development.local
 
+.wrangler.toml
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

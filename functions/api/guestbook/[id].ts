@@ -1,6 +1,6 @@
 // Cloudflare Pages Functions types are provided by @cloudflare/workers-types
 interface Env {
-  my_wedding: D1Database;
+  db: D1Database;
 }
 
 // DELETE: 방명록 삭제 (비밀번호 확인)
@@ -22,7 +22,7 @@ export const onRequestDelete: PagesFunction<Env> = async (context) => {
     }
 
     // 비밀번호 확인
-    const { results } = await context.env.my_wedding
+    const { results } = await context.env.db
       .prepare("SELECT password FROM guestbook WHERE id = ?")
       .bind(id)
       .all();
@@ -50,7 +50,7 @@ export const onRequestDelete: PagesFunction<Env> = async (context) => {
     }
 
     // 삭제 실행
-    await context.env.my_wedding
+    await context.env.db
       .prepare("DELETE FROM guestbook WHERE id = ?")
       .bind(id)
       .run();
