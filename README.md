@@ -1,6 +1,6 @@
-# 나은 & 민태의 청첩장 웹사이트
+# 청첩장 웹사이트
 
-방문하기 : [링크](https://naeun-mintae-wedding.pages.dev/)
+원본 문하기 : [링크](https://Hyejin-junhyeok-wedding.pages.dev/)
 
 ---
 

@@ -1,9 +1,9 @@
-# MT-NAEUN-WEDDING 개발 규칙 (Claude Code)
+# MT-Hyejin-WEDDING 개발 규칙 (Claude Code)
 
 ## 프로젝트 개요
-나은 & 민태의 모바일 청첩장 웹사이트. 결혼 청첩장 비용 절감을 위해 직접 개발한 사이트.
+모바일 청첩장 웹사이트. 결혼 청첩장 비용 절감을 위해 직접 개발한 사이트.
 
-**Live URL**: https://naeun-mintae-wedding.pages.dev/
+**Live URL**: https://Hyejin-junhyeok-wedding.pages.dev/
 
 ---
 

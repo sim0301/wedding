@@ -61,7 +61,7 @@ function App() {
       </ScrollReveal>
 
       <footer className="footer">
-        <p>© 2026-10-25 Mintae & Naeun Wedding</p>
+        <p>© 2026-10-25 junhyeok & Hyejin Wedding</p>
       </footer>
 
       <BgMusic />

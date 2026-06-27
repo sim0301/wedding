@@ -13,7 +13,7 @@ export const GroqChatbot = () => {
     {
       role: "assistant",
       content:
-        "안녕하세요! 김민태♥김나은 결혼식에 대해 궁금한 것이 있으신가요?",
+        "안녕하세요! 심준혁♥전혜진 결혼식에 대해 궁금한 것이 있으신가요?",
     },
   ]);
   const [inputValue, setInputValue] = useState("");

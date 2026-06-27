@@ -3,29 +3,29 @@ import { getGalleryImages } from "../config/r2";
 
 export const mockWeddingData: WeddingData = {
   groom: {
-    name: "김민태",
-    englishName: "Kim Mintae",
-    phone: "010-1234-5678",
-    father: "김철범",
-    mother: "이미영",
+    name: "심준혁",
+    englishName: "Sim junhyeok",
+    phone: "010-2665-5995",
+    father: "심상근",
+    mother: "송현숙",
     relation: "장남",
   },
   bride: {
-    name: "김나은",
-    englishName: "Kim Naeun",
-    phone: "010-1234-5678",
-    father: "김완기",
-    mother: "이미희",
-    relation: "차녀",
+    name: "전혜진",
+    englishName: "Jeon ",
+    phone: "010-4522-5685",
+    father: "전정석",
+    mother: "서영순",
+    relation: "막내",
   },
-  weddingDate: "2026.10.25 (일요일)",
-  weddingTime: "오후 2시",
+  weddingDate: "2026.10.31 (토요일)",
+  weddingTime: "오전 11시",
   venue: {
-    name: "아벤티움 웨딩 서울",
+    name: "라비에벨 웨딩",
     address: "서울특별시 중구 청파로 464 브라운스톤서울 3층",
     phone: "02-313-2480",
     floor: "3층",
-    hall: "아벤티움 단독홀",
+    hall: "라비에벨 단독홀",
     mapUrl: "https://map.naver.com/v5/search/브라운스톤서울",
     transportation: [
       {
@@ -165,7 +165,7 @@ export const mockWeddingData: WeddingData = {
   accounts: {
     groom: [
       {
-        holder: "김민태",
+        holder: "심준혁",
         bank: "카카오뱅크",
         accountNumber: "123-456-789012",
       },
@@ -182,7 +182,7 @@ export const mockWeddingData: WeddingData = {
     ],
     bride: [
       {
-        holder: "김나은",
+        holder: "전혜진",
         bank: "우리은행",
         accountNumber: "1002-123-456789",
       },
