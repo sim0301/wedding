@@ -22,11 +22,11 @@ export const mockWeddingData: WeddingData = {
   weddingTime: "오전 11시",
   venue: {
     name: "라비에벨 웨딩",
-    address: "서울특별시 중구 청파로 464 브라운스톤서울 3층",
-    phone: "02-313-2480",
-    floor: "3층",
+    address: "경기도 부천시 길주로 105 라비에벨 9층",
+    phone: "032-325-2000",
+    floor: "9층",
     hall: "라비에벨 단독홀",
-    mapUrl: "https://map.naver.com/v5/search/브라운스톤서울",
+    mapUrl: "https://map.naver.com/v5/search/라비에벨",
     transportation: [
       {
         type: "subway",
@@ -60,12 +60,12 @@ export const mockWeddingData: WeddingData = {
   },
   parents: {
     groom: {
-      father: "김철범",
-      mother: "이미영",
+      father: "심상근",
+      mother: "송현숙",
     },
     bride: {
-      father: "김완기",
-      mother: "이미희",
+      father: "전정석",
+      mother: "서영순",
     },
   },
   gallery: getGalleryImages(),
@@ -170,12 +170,12 @@ export const mockWeddingData: WeddingData = {
         accountNumber: "123-456-789012",
       },
       {
-        holder: "이미영",
+        holder: "송현숙",
         bank: "신한은행",
         accountNumber: "110-123-456789",
       },
       {
-        holder: "김철범",
+        holder: "심상근",
         bank: "신한은행",
         accountNumber: "110-123-456789",
       },
@@ -187,12 +187,12 @@ export const mockWeddingData: WeddingData = {
         accountNumber: "1002-123-456789",
       },
       {
-        holder: "이미희",
+        holder: "서영순",
         bank: "KB국민은행",
         accountNumber: "123456-01-123456",
       },
       {
-        holder: "김완기",
+        holder: "전정석",
         bank: "KB국민은행",
         accountNumber: "123456-01-123456",
       },

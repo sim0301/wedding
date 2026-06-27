@@ -19,17 +19,17 @@ declare global {
 export const Location: React.FC<LocationProps> = ({ data }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const handleNaverMap = () => {
-    window.open("https://naver.me/FV7Yg9qI");
+    window.open("https://map.naver.com/p/search/부천%20라비에벨%20웨딩홀/place/12945535?placePath=/home?abtExp=NEW-PLACE-SEARCH:4&bk_query=부천%20라비에벨%20웨딩홀&entry=pll&from=map&fromNxList=true&fromPanelNum=2&timestamp=202606272128&locale=ko&svcName=map_pcv5&searchText=부천%20라비에벨%20웨딩홀&searchType=place&c=15.00,0,0,0,dh");
   };
 
   const handleKakaoMap = () => {
-    window.open("https://place.map.kakao.com/8282484");
+    window.open("https://place.map.kakao.com/98780839");
   };
 
   const handleTmap = () => {
-    const placeName = encodeURIComponent("아벤티움");
-    const longitude = 126.96814500189701;
-    const latitude = 37.560983379051315;
+    const placeName = encodeURIComponent("라비에벨");
+    const longitude = 126.7556014294643;
+    const latitude = 37.50717935392009;
 
     const tmapUrl = `tmap://route?rGoName=${placeName}&rGoX=${longitude}&rGoY=${latitude}`;
     window.open(tmapUrl);
@@ -41,20 +41,20 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
 
       // 카카오맵 로드 확인
       if (kakao.maps) {
-        // 아벤티움 웨딩 서울 좌표 (브라운스톤서울 3층)
+        // 라비에벨 좌표
         const position = new kakao.maps.LatLng(
-          37.560983379051315,
-          126.96814500189701
+          37.50717935392009,
+          126.7556014294643
         );
 
-        const options = {
+        const mapOption = {
           center: position,
           level: 3, // 지도 확대 레벨
           scrollwheel: false, // 마우스 휠 줌 비활성화
         };
 
         // 지도 생성
-        const map = new kakao.maps.Map(mapContainer.current, options);
+        const map = new kakao.maps.Map(mapContainer.current, mapOption);
 
         // 줌 컨트롤 추가 (우측 상단에 +/- 버튼)
         const zoomControl = new kakao.maps.ZoomControl();
@@ -69,7 +69,7 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
         // 인포윈도우 생성
         const infowindow = new kakao.maps.InfoWindow({
           content:
-            '<div style="padding:5px;font-size:12px;text-align:center;">채플 웨딩홀 아벤티움 서울</div>',
+            '<div style="padding:5px;font-size:12px;text-align:center;">부천 라비에벨</div>',
         });
 
         // 마커에 마우스오버 이벤트 등록
