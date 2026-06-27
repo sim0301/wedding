@@ -1,8 +1,13 @@
-name = "junyehok-wedding"
-main = "functions/api/guestbook.ts"
-compatibility_date = "2025-10-04"
+name = "wedding"
+compatibility_date = "2026-06-04"
+
+# Pages 함수를 위한 설정
+[env.production]
+d1_databases = [
+  { binding = "my_wedding", database_name = "my-wedding", database_id = "f6fcae2c-46c6-4d3a-b141-9f517defb4d2" }
+]
 
 [[d1_databases]]
 binding = "my_wedding"
 database_name = "my-wedding"
-database_id = "b980f0d8-8b10-431d-b2d2-45b8d9a5cc08"
+database_id = "f6fcae2c-46c6-4d3a-b141-9f517defb4d2"

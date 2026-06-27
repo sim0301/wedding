@@ -1,11 +1,11 @@
-# MT-Hyejin-WEDDING 개발 규칙 (Claude Code)
+# WEDDING 개발 규칙 (Claude Code)
 
 ## 프로젝트 개요
 모바일 청첩장 웹사이트. 결혼 청첩장 비용 절감을 위해 직접 개발한 사이트.
 
 **Live URL**: https://Hyejin-junhyeok-wedding.pages.dev/
 
----
+---"
 
 ## 기본 원칙
 - 모든 대화와 코드 주석은 한국어로 작성
@@ -52,12 +52,12 @@
 ### wrangler.toml
 ```toml
 main = "functions/api/guestbook.ts"
-compatibility_date = "2025-10-04"
+compatibility_date = "2026-06-04"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "my_wedding"
-database_id = "b980f0d8-8b10-431d-b2d2-45b8d9a5cc08"
+database_id = "f6fcae2c-46c6-4d3a-b141-9f517defb4d2"
 ```
 
 ### 환경변수 (Cloudflare Dashboard)
