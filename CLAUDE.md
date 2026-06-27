@@ -3,7 +3,7 @@
 ## 프로젝트 개요
 모바일 청첩장 웹사이트. 결혼 청첩장 비용 절감을 위해 직접 개발한 사이트.
 
-**Live URL**: https://Hyejin-junhyeok-wedding.pages.dev/
+**Live URL**: https://junhyeok-wedding.dev/
 
 ---"
 
