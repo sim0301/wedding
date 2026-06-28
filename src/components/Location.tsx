@@ -43,6 +43,9 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
   };
 
   useEffect(() => {
+    let timeoutId: number | undefined;
+    let intervalId: number | undefined;
+
     const initializeMap = () => {
       if (!mapContainer.current || !window.kakao?.maps) {
         setMapLoadError(true);
@@ -87,7 +90,31 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
       setMapLoadError(false);
     };
 
-    if (window.kakao?.maps) {
+    const tryInitialize = () => {
+      if (window.kakao?.maps?.load) {
+        window.kakao.maps.load(initializeMap);
+        return true;
+      }
+      return false;
+    };
+
+    const waitForKakao = () => {
+      if (tryInitialize()) return;
+
+      intervalId = window.setInterval(() => {
+        if (tryInitialize()) {
+          window.clearInterval(intervalId);
+          if (timeoutId) window.clearTimeout(timeoutId);
+        }
+      }, 100);
+
+      timeoutId = window.setTimeout(() => {
+        if (intervalId) window.clearInterval(intervalId);
+        setMapLoadError(true);
+      }, 10000);
+    };
+
+    if (window.kakao?.maps?.load) {
       window.kakao.maps.load(initializeMap);
       return;
     }
@@ -97,11 +124,7 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
       existingScript.addEventListener(
         "load",
         () => {
-          if (window.kakao?.maps) {
-            window.kakao.maps.load(initializeMap);
-          } else {
-            setMapLoadError(true);
-          }
+          waitForKakao();
         },
         { once: true }
       );
@@ -120,17 +143,18 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APPKEY}&autoload=false`;
     script.async = true;
     script.onload = () => {
-      if (window.kakao?.maps) {
-        window.kakao.maps.load(initializeMap);
-      } else {
-        setMapLoadError(true);
-      }
+      waitForKakao();
     };
     script.onerror = () => {
       setMapLoadError(true);
     };
 
     document.head.appendChild(script);
+
+    return () => {
+      if (intervalId) window.clearInterval(intervalId);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
   }, []);
 
   return (
@@ -148,39 +172,61 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
           <p className="venue-phone">Tel. {data.venue.phone}</p>
         </div>
 
-        <div className="map-placeholder">
-          {isMapReady ? (
+        <div
+          className="map-placeholder"
+          style={{ position: "relative", minHeight: "300px" }}
+        >
+          <div
+            ref={mapContainer}
+            style={{
+              width: "100%",
+              height: "300px",
+              borderRadius: "10px",
+            }}
+          />
+
+          {!isMapReady && !mapLoadError && (
             <div
-              ref={mapContainer}
               style={{
-                width: "100%",
-                height: "300px",
-                borderRadius: "10px",
-              }}
-            ></div>
-          ) : (
-            <div
-              style={{
-                width: "100%",
-                height: "300px",
-                borderRadius: "10px",
+                position: "absolute",
+                inset: 0,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "#f7f7f7",
+                backgroundColor: "rgba(247,247,247,0.95)",
                 color: "#666",
                 padding: "16px",
                 textAlign: "center",
                 fontSize: "0.95rem",
+                borderRadius: "10px",
+              }}
+            >
+              <p>카카오 지도를 불러오는 중입니다...</p>
+            </div>
+          )}
+
+          {mapLoadError && (
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "rgba(247,247,247,0.95)",
+                color: "#666",
+                padding: "16px",
+                textAlign: "center",
+                fontSize: "0.95rem",
+                borderRadius: "10px",
               }}
             >
               <p>카카오 지도를 불러오지 못했습니다.</p>
-              {mapLoadError && (
-                <p style={{ marginTop: "8px", fontSize: "0.85rem" }}>
-                  카카오 개발자 콘솔에서 앱키와 도메인 등록 상태를 확인해 주세요.
-                </p>
-              )}
+              <p style={{ marginTop: "8px", fontSize: "0.85rem" }}>
+                카카오 개발자 콘솔에서 앱키와 도메인 등록 상태를 확인해 주세요.
+              </p>
             </div>
           )}
         </div>
