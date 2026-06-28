@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaSubway, FaBus, FaShuttleVan } from "react-icons/fa";
 import type { WeddingData } from "../types";
 import { parseTransportation } from "../utils/transportationParser";
@@ -16,8 +16,15 @@ declare global {
   }
 }
 
+const KAKAO_MAP_APPKEY =
+  import.meta.env.VITE_KAKAO_MAP_APPKEY ||
+  "fa7ed00e26baaa5c841014401f3ee5e7";
+
 export const Location: React.FC<LocationProps> = ({ data }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
+  const [isMapReady, setIsMapReady] = useState(false);
+  const [mapLoadError, setMapLoadError] = useState(false);
+
   const handleNaverMap = () => {
     window.open("https://map.naver.com/p/search/부천%20라비에벨%20웨딩홀/place/12945535?placePath=/home?abtExp=NEW-PLACE-SEARCH:4&bk_query=부천%20라비에벨%20웨딩홀&entry=pll&from=map&fromNxList=true&fromPanelNum=2&timestamp=202606272128&locale=ko&svcName=map_pcv5&searchText=부천%20라비에벨%20웨딩홀&searchType=place&c=15.00,0,0,0,dh");
   };
@@ -36,53 +43,94 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
   };
 
   useEffect(() => {
-    if (mapContainer.current && window.kakao) {
-      const { kakao } = window;
-
-      // 카카오맵 로드 확인
-      if (kakao.maps) {
-        // 라비에벨 좌표
-        const position = new kakao.maps.LatLng(
-          37.50717935392009,
-          126.7556014294643
-        );
-
-        const mapOption = {
-          center: position,
-          level: 3, // 지도 확대 레벨
-          scrollwheel: false, // 마우스 휠 줌 비활성화
-        };
-
-        // 지도 생성
-        const map = new kakao.maps.Map(mapContainer.current, mapOption);
-
-        // 줌 컨트롤 추가 (우측 상단에 +/- 버튼)
-        const zoomControl = new kakao.maps.ZoomControl();
-        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-        // 마커 생성
-        const marker = new kakao.maps.Marker({
-          position: position,
-          map: map,
-        });
-
-        // 인포윈도우 생성
-        const infowindow = new kakao.maps.InfoWindow({
-          content:
-            '<div style="padding:5px;font-size:12px;text-align:center;">부천 라비에벨</div>',
-        });
-
-        // 마커에 마우스오버 이벤트 등록
-        kakao.maps.event.addListener(marker, "mouseover", () => {
-          infowindow.open(map, marker);
-        });
-
-        // 마커에 마우스아웃 이벤트 등록
-        kakao.maps.event.addListener(marker, "mouseout", () => {
-          infowindow.close();
-        });
+    const initializeMap = () => {
+      if (!mapContainer.current || !window.kakao?.maps) {
+        setMapLoadError(true);
+        return;
       }
+
+      const { kakao } = window;
+      const position = new kakao.maps.LatLng(
+        37.50717935392009,
+        126.7556014294643
+      );
+
+      const mapOption = {
+        center: position,
+        level: 3,
+        scrollwheel: false,
+      };
+
+      const map = new kakao.maps.Map(mapContainer.current, mapOption);
+      const zoomControl = new kakao.maps.ZoomControl();
+      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+      const marker = new kakao.maps.Marker({
+        position,
+        map,
+      });
+
+      const infowindow = new kakao.maps.InfoWindow({
+        content:
+          '<div style="padding:5px;font-size:12px;text-align:center;">부천 라비에벨</div>',
+      });
+
+      kakao.maps.event.addListener(marker, "mouseover", () => {
+        infowindow.open(map, marker);
+      });
+
+      kakao.maps.event.addListener(marker, "mouseout", () => {
+        infowindow.close();
+      });
+
+      setIsMapReady(true);
+      setMapLoadError(false);
+    };
+
+    if (window.kakao?.maps) {
+      window.kakao.maps.load(initializeMap);
+      return;
     }
+
+    const existingScript = document.getElementById("kakao-map-script");
+    if (existingScript) {
+      existingScript.addEventListener(
+        "load",
+        () => {
+          if (window.kakao?.maps) {
+            window.kakao.maps.load(initializeMap);
+          } else {
+            setMapLoadError(true);
+          }
+        },
+        { once: true }
+      );
+      existingScript.addEventListener(
+        "error",
+        () => {
+          setMapLoadError(true);
+        },
+        { once: true }
+      );
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.id = "kakao-map-script";
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APPKEY}&autoload=false`;
+    script.async = true;
+    script.onload = () => {
+      if (window.kakao?.maps) {
+        window.kakao.maps.load(initializeMap);
+      } else {
+        setMapLoadError(true);
+      }
+    };
+    script.onerror = () => {
+      setMapLoadError(true);
+    };
+
+    document.head.appendChild(script);
   }, []);
 
   return (
@@ -101,14 +149,40 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
         </div>
 
         <div className="map-placeholder">
-          <div
-            ref={mapContainer}
-            style={{
-              width: "100%",
-              height: "300px",
-              borderRadius: "10px",
-            }}
-          ></div>
+          {isMapReady ? (
+            <div
+              ref={mapContainer}
+              style={{
+                width: "100%",
+                height: "300px",
+                borderRadius: "10px",
+              }}
+            ></div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                height: "300px",
+                borderRadius: "10px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#f7f7f7",
+                color: "#666",
+                padding: "16px",
+                textAlign: "center",
+                fontSize: "0.95rem",
+              }}
+            >
+              <p>카카오 지도를 불러오지 못했습니다.</p>
+              {mapLoadError && (
+                <p style={{ marginTop: "8px", fontSize: "0.85rem" }}>
+                  카카오 개발자 콘솔에서 앱키와 도메인 등록 상태를 확인해 주세요.
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="transportation-info">
