@@ -96,12 +96,12 @@ export const mockWeddingData: WeddingData = {
       {
         holder: "송현숙",
         bank: "신한은행",
-        accountNumber: "110-123-456789",
+        accountNumber: "296-049208-02-011",
       },
       {
         holder: "심상근",
         bank: "신한은행",
-        accountNumber: "110-123-456789",
+        accountNumber: "217-890166-97-307",
       },
     ],
     bride: [
