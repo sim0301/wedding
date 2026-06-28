@@ -56,9 +56,11 @@ function App() {
         <Account data={mockWeddingData} />
       </ScrollReveal>
 
+{/*
       <ScrollReveal direction="fade" delay={0.15}>
         <FlowerInfo />
       </ScrollReveal>
+*/}
 
       <footer className="footer">
         <p>© 2026-10-25 junhyeok & Hyejin Wedding</p>

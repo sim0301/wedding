@@ -71,11 +71,12 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
       const marker = new kakao.maps.Marker({
         position,
         map,
+        text: "라비에벨 부천",
       });
 
       const infowindow = new kakao.maps.InfoWindow({
         content:
-          '<div style="padding:5px;font-size:12px;text-align:center;">부천 라비에벨</div>',
+          '<div style="padding:5px;font-size:12px;text-align:center;">라비에벨 부천</div>',
       });
 
       kakao.maps.event.addListener(marker, "mouseover", () => {
