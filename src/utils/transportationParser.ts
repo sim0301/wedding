@@ -4,7 +4,7 @@ export interface SubwayLine {
 }
 
 export interface BusRoute {
-  type: "trunk" | "branch"; // trunk: 간선, branch: 지선
+  type: "trunk" | "branch" | "regional"; // trunk: 간선, branch: 지선, regional: 광역
   number: string;
   color: string;
 }
@@ -39,6 +39,7 @@ export const SUBWAY_COLORS: Record<string, string> = {
 export const BUS_COLORS = {
   trunk: "#0C347E", // 간선 - 파란색
   branch: "#3B9F37", // 지선 - 초록색
+  regional: "#E60012", // 광역 - 빨간색
 };
 
 // 지하철 정보 파싱
@@ -63,31 +64,32 @@ export function parseSubwayInfo(description: string): SubwayLine[] {
 // 버스 정보 파싱
 export function parseBusInfo(description: string): BusRoute[] {
   const routes: BusRoute[] = [];
+  const categoryRegex = /\[(간선|일반|지선|광역)\]\s*([^[]*)/g;
 
-  // [간선] 또는 [지선] 다음에 오는 숫자들 파싱
-  const trunkRegex = /\[간선\]\s*([\d,\s]+)/;
-  const branchRegex = /\[지선\]\s*([\d,\sA-Z]+)/;
+  for (const match of description.matchAll(categoryRegex)) {
+    const [, label, rawRoutes] = match;
+    const routeType: BusRoute["type"] =
+      label === "간선"
+        ? "trunk"
+        : label === "광역"
+          ? "regional"
+          : "branch";
 
-  const trunkMatch = description.match(trunkRegex);
-  if (trunkMatch) {
-    const numbers = trunkMatch[1].split(",").map((n) => n.trim());
+    const numbers = Array.from(
+      rawRoutes.matchAll(/\d{1,4}(?:-\d+)?(?:[A-Z])?/g),
+      (item) => item[0]
+    );
+
     numbers.forEach((number) => {
       routes.push({
-        type: "trunk",
+        type: routeType,
         number,
-        color: BUS_COLORS.trunk,
-      });
-    });
-  }
-
-  const branchMatch = description.match(branchRegex);
-  if (branchMatch) {
-    const numbers = branchMatch[1].split(",").map((n) => n.trim());
-    numbers.forEach((number) => {
-      routes.push({
-        type: "branch",
-        number,
-        color: BUS_COLORS.branch,
+        color:
+          routeType === "trunk"
+            ? BUS_COLORS.trunk
+            : routeType === "regional"
+              ? BUS_COLORS.regional
+              : BUS_COLORS.branch,
       });
     });
   }

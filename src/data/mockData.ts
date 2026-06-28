@@ -30,33 +30,33 @@ export const mockWeddingData: WeddingData = {
     transportation: [
       {
         type: "subway",
-        description: "2호선, 5호선 충정로역 4번 출구 도보 3분",
-        text: "충정로역 4번 출구 도보 3분",
+        description: "7호선 상동역 7번, 8번 출구와 바로 연결",
+        text: "상동역 7번, 8번 출구와 바로 연결",
       },
       {
         type: "subway",
-        description: "1호선, 4호선 서울역 15번출구(공항철도역) 도보 10분",
-        text: "서울역 15번출구(공항철도역) 도보 10분",
+        description: "1호선 송내역 2번출구 버스로 15분정도 소요",
+        text: "송내역 2번출구 버스로 15분정도 소요 / 송내역 버스노선 : 16, 37, 83, 87",
       },
       {
         type: "bus",
         description:
-          "한국경제신문사 하차 - [간선] 370, 603 [지선] 7011, 7013A, 7013B, 7017",
-        text: "한국경제신문사 하차",
+          "상동역7번출구.세이브존 하차 - [일반]5-4, 16, 33, 50-1, 83",
+        text: "상동역7번출구.세이브존 하차",
       },
       {
         type: "bus",
         description:
-          "경찰청·동북아역사재단 하차 - [간선] 103, 150, 701, 704, 708, 709, 742, 750A",
-        text: "경찰청·동북아역사재단 하차",
+          "상동역8번출구.세이브존 하차 - [간선]24, 37, 87, [일반]6-2, 23-2, 50-1, 52, 59, 59-1, 66, 70",
+        text: "상동역8번출구.세이브존 하차",
       },
       {
         type: "bus",
-        description: "서울역서부 하차 - [간선] 173, 261, 262, 463, 503, 604",
-        text: "서울역서부 하차",
+        description: "[광역]300(강남역), 8906(범계역), 8106(분당), 1001(고양교통), 1601(홍대)",
+        text: "상동역8번출구.세이브존 하차",
       },
     ],
-    parking: "건물 내 지하 주차장 이용 가능 (2시간 무료)",
+    parking: "세이브존 B2~B4 주차장 / 하이파킹 주차장",
   },
   parents: {
     groom: {
@@ -79,13 +79,8 @@ export const mockWeddingData: WeddingData = {
     },
     {
       question: "신혼여행은 어디로 가시나요?",
-      groomAnswer: "자연이 아름다운 뉴질랜드로 떠날 예정입니다!",
-      brideAnswer: "뉴질랜드의 멋진 자연 속에서 여유롭게 여행할 계획이에요.",
-    },
-    {
-      question: "새로운 가정의 첫 터전은?",
-      groomAnswer: "서울 사당 근처에서 삶의 터전을 시작할 계획입니다.",
-      brideAnswer: "사당에서 시작해 앞으로 함께 꾸려갈 예정이에요.",
+      groomAnswer: "자연이 아름다운 포르투갈/스페인 떠날 예정입니다!",
+      brideAnswer: "포르투갈의 멋진 자연 속에서 여유롭게 여행할 계획이에요.",
     },
   ],
   guestbook: [
@@ -95,8 +90,8 @@ export const mockWeddingData: WeddingData = {
     groom: [
       {
         holder: "심준혁",
-        bank: "카카오뱅크",
-        accountNumber: "123-456-789012",
+        bank: "신한은행",
+        accountNumber: "110-405-016910",
       },
       {
         holder: "송현숙",

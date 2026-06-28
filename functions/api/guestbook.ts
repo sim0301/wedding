@@ -1,6 +1,7 @@
 // Cloudflare Pages Functions types are provided by @cloudflare/workers-types
 interface Env {
-  db: D1Database;
+  db?: D1Database;
+  my_wedding?: D1Database;
 }
 
 interface GuestbookEntry {
@@ -10,16 +11,34 @@ interface GuestbookEntry {
   date: string;
 }
 
+const getDb = (env: Env): D1Database | undefined => env.db || env.my_wedding;
+
 // GET: 방명록 목록 조회
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   try {
-    const { results } = await context.env.db
+    const db = getDb(context.env);
+    if (!db) {
+      return new Response(JSON.stringify([]), {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+    }
+
+    await db
+      .prepare(
+        "CREATE TABLE IF NOT EXISTS guestbook (id TEXT PRIMARY KEY, author TEXT NOT NULL, message TEXT NOT NULL, password TEXT NOT NULL, date TEXT NOT NULL, created_at TEXT DEFAULT CURRENT_TIMESTAMP)"
+      )
+      .run();
+
+    const { results } = await db
       .prepare(
         "SELECT id, author, message, date FROM guestbook ORDER BY created_at DESC"
       )
       .all();
 
-    return new Response(JSON.stringify(results), {
+    return new Response(JSON.stringify(results || []), {
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
@@ -27,13 +46,12 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     });
   } catch (error) {
     console.error("Error fetching guestbook entries:", error);
-    return new Response(
-      JSON.stringify({ error: "Failed to fetch guestbook entries" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify([]), {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
   }
 };
 
@@ -56,10 +74,24 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       );
     }
 
+    const db = getDb(context.env);
+    if (!db) {
+      return new Response(JSON.stringify({ error: "Database not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    await db
+      .prepare(
+        "CREATE TABLE IF NOT EXISTS guestbook (id TEXT PRIMARY KEY, author TEXT NOT NULL, message TEXT NOT NULL, password TEXT NOT NULL, date TEXT NOT NULL, created_at TEXT DEFAULT CURRENT_TIMESTAMP)"
+      )
+      .run();
+
     const id = crypto.randomUUID();
     const date = new Date().toISOString().split("T")[0];
 
-    await context.env.db
+    await db
       .prepare(
         "INSERT INTO guestbook (id, author, message, password, date) VALUES (?, ?, ?, ?, ?)"
       )
