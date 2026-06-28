@@ -1,5 +1,6 @@
 import React from "react";
-import { AiOutlineMail } from "react-icons/ai";
+import { AiOutlineMessage } from "react-icons/ai";
+import { BiTransferAlt } from "react-icons/bi";
 import { FaPhone } from "react-icons/fa";
 import type { WeddingData } from "../types";
 
@@ -12,10 +13,21 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
     window.location.href = `tel:${phone.replace(/[^0-9+]/g, "")}`;
   };
 
+  const handleSms = (phone: string) => {
+    window.location.href = `sms:${phone.replace(/[^0-9+]/g, "")}`;
+  };
+
+  const handleTransfer = () => {
+    const target = document.getElementById("account-subtitle");
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <section className="account-section">
-      <h2 className="section-title">ACCOUNT</h2>
-      <p className="section-subtitle">마음 전하실 곳</p>
+    <section id="account" className="account-section">
+      <div className="account-hero">
+        <h2 className="section-title">ACCOUNT</h2>
+      </div>
+      <p id="account-subtitle" className="section-subtitle">마음 전하실 곳</p>
 
       <div className="account-content">
         <div className="account-column">
@@ -31,8 +43,19 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
                 >
                   <FaPhone />
                 </button>
-                <button type="button" className="icon-btn disabled" disabled>
-                  <AiOutlineMail />
+                <button
+                  type="button"
+                  className="icon-btn"
+                  onClick={() => handleSms(data.groom.phone)}
+                >
+                  <AiOutlineMessage />
+                </button>
+                <button
+                  type="button"
+                  className="icon-btn transfer-icon-btn"
+                  onClick={handleTransfer}
+                >
+                  <BiTransferAlt />
                 </button>
               </div>
             </div>
@@ -48,7 +71,10 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
                   <FaPhone />
                 </button>
                 <button type="button" className="icon-btn disabled" disabled>
-                  <AiOutlineMail />
+                  <AiOutlineMessage />
+                </button>
+                <button type="button" className="icon-btn transfer-icon-btn disabled" disabled>
+                  <BiTransferAlt />
                 </button>
               </div>
             </div>
@@ -60,14 +86,15 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
                   <FaPhone />
                 </button>
                 <button type="button" className="icon-btn disabled" disabled>
-                  <AiOutlineMail />
+                  <AiOutlineMessage />
+                </button>
+                <button type="button" className="icon-btn transfer-icon-btn disabled" disabled>
+                  <BiTransferAlt />
                 </button>
               </div>
             </div>
           </div>
         </div>
-
-        <div className="account-divider" />
 
         <div className="account-column">
           <div className="account-card">
@@ -82,8 +109,19 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
                 >
                   <FaPhone />
                 </button>
-                <button type="button" className="icon-btn disabled" disabled>
-                  <AiOutlineMail />
+                <button
+                  type="button"
+                  className="icon-btn"
+                  onClick={() => handleSms(data.bride.phone)}
+                >
+                  <AiOutlineMessage />
+                </button>
+                <button
+                  type="button"
+                  className="icon-btn transfer-icon-btn"
+                  onClick={handleTransfer}
+                >
+                  <BiTransferAlt />
                 </button>
               </div>
             </div>
@@ -99,7 +137,10 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
                   <FaPhone />
                 </button>
                 <button type="button" className="icon-btn disabled" disabled>
-                  <AiOutlineMail />
+                  <AiOutlineMessage />
+                </button>
+                <button type="button" className="icon-btn transfer-icon-btn disabled" disabled>
+                  <BiTransferAlt />
                 </button>
               </div>
             </div>
@@ -111,7 +152,10 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
                   <FaPhone />
                 </button>
                 <button type="button" className="icon-btn disabled" disabled>
-                  <AiOutlineMail />
+                  <AiOutlineMessage />
+                </button>
+                <button type="button" className="icon-btn transfer-icon-btn disabled" disabled>
+                  <BiTransferAlt />
                 </button>
               </div>
             </div>

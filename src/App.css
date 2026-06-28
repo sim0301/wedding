@@ -22,7 +22,7 @@ body {
 
 /* Common Section Styles */
 section {
-  padding: 60px 20px;
+  padding: 40px 16px;
   text-align: center;
 }
 
@@ -1258,29 +1258,87 @@ section {
   background: linear-gradient(135deg, #fdf8f1 0%, #f8ebe0 35%, #f4e2d5 70%, #ebe2d0 100%);
 }
 
+.account-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.transfer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 110px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(139, 115, 85, 0.25);
+  background-color: #ffffff;
+  color: #8b7355;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.transfer-btn:hover {
+  background-color: #f7e8d9;
+}
+
+.transfer-icon {
+  font-size: 18px;
+}
+
+.transfer-icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .account-content {
-  max-width: 1100px;
+  max-width: 100%;
   margin: 0 auto;
   display: flex;
-  gap: 30px;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 18px;
+  align-items: stretch;
   justify-content: center;
-  flex-wrap: wrap;
-  padding: 10px 0 20px;
+  padding: 8px 0 16px;
 }
 
 .account-column {
-  flex: 1 1 320px;
-  min-width: 280px;
+  width: 100%;
 }
 
 .account-card {
-  background-color: rgba(255, 255, 255, 0.94);
+  background-color: rgba(255, 255, 255, 0.98);
   border-radius: 24px;
-  padding: 26px 24px;
-  box-shadow: 0 18px 45px rgba(107, 84, 66, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  margin-bottom: 24px;
+  padding: 20px 18px;
+  box-shadow: 0 12px 30px rgba(107, 84, 66, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  margin-bottom: 18px;
+}
+
+@media (min-width: 769px) {
+  .account-content {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 1100px;
+    padding: 10px 0 20px;
+  }
+
+  .account-column {
+    flex: 1 1 320px;
+    min-width: 280px;
+  }
 }
 
 .account-position {
@@ -1368,35 +1426,39 @@ section {
 }
 
 .account-divider {
-  width: 54px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+  display: none;
 }
 
-.account-divider::before {
-  content: "";
-  width: 14px;
-  height: 14px;
-  background-color: #8b7355;
-  transform: rotate(45deg);
-  display: block;
-}
-
-@media (max-width: 768px) {
+@media (min-width: 769px) {
   .account-content {
-    flex-direction: column;
-    gap: 18px;
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 1100px;
+    padding: 10px 0 20px;
+  }
+
+  .account-column {
+    flex: 1 1 320px;
+    min-width: 280px;
   }
 
   .account-divider {
-    width: 100%;
+    width: 54px;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    position: relative;
   }
 
   .account-divider::before {
-    margin: 0 auto;
+    content: "";
+    width: 14px;
+    height: 14px;
+    background-color: #8b7355;
+    transform: rotate(45deg);
+    display: block;
   }
 }
 
