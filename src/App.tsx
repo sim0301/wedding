@@ -12,7 +12,6 @@ import { GroqChatbot } from "./components/GroqChatbot";
 import { mockWeddingData } from "./data/mockData";
 import "./App.css";
 import { BgMusic } from "./components/BgMusic";
-import { FlowerInfo } from "./components/FlowerInfo";
 
 function App() {
   return (

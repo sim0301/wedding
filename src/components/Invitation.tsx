@@ -6,6 +6,10 @@ interface InvitationProps {
 }
 
 export const Invitation: React.FC<InvitationProps> = ({ data }) => {
+  const handleCall = (phone: string) => {
+    window.location.href = `tel:${phone.replace(/[^0-9+]/g, "")}`;
+  };
+
   return (
     <section className="invitation-section">
       <h2 className="section-title">INVITATION</h2>
@@ -33,7 +37,13 @@ export const Invitation: React.FC<InvitationProps> = ({ data }) => {
               </p>
               <p className="parent-relation">의 {data.groom.relation}</p>
               <p className="child-name">{data.groom.name}</p>
-              <button className="contact-btn">연락하기</button>
+              <button
+                type="button"
+                className="contact-btn"
+                onClick={() => handleCall(data.groom.phone)}
+              >
+                연락하기
+              </button>
             </div>
           </div>
 
@@ -45,7 +55,13 @@ export const Invitation: React.FC<InvitationProps> = ({ data }) => {
               </p>
               <p className="parent-relation">의 {data.bride.relation}</p>
               <p className="child-name">{data.bride.name}</p>
-              <button className="contact-btn">연락하기</button>
+              <button
+                type="button"
+                className="contact-btn"
+                onClick={() => handleCall(data.bride.phone)}
+              >
+                연락하기
+              </button>
             </div>
           </div>
         </div>
