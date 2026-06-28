@@ -35,8 +35,8 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
 
   const handleTmap = () => {
     const placeName = encodeURIComponent("라비에벨");
-    const longitude = 126.7556014294643;
-    const latitude = 37.50717935392009;
+    const longitude = 126.754135;
+    const latitude = 37.506391;
 
     const tmapUrl = `tmap://route?rGoName=${placeName}&rGoX=${longitude}&rGoY=${latitude}`;
     window.open(tmapUrl);
@@ -54,8 +54,8 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
 
       const { kakao } = window;
       const position = new kakao.maps.LatLng(
-        37.50717935392009,
-        126.7556014294643
+        37.506391,
+        126.754135
       );
 
       const mapOption = {
