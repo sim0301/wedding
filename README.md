@@ -1,6 +1,6 @@
 # 청첩장 웹사이트
 
-원본 문하기 : [링크](https://Hyejin-junhyeok-wedding.pages.dev/)
+원본 문하기 : [링크](https://junhyeok-wedding.pages.dev/)
 
 ---
 

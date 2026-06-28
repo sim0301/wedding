@@ -14,10 +14,6 @@ export const Information: React.FC = () => {
       content: "식사는 뷔페로 진행됩니다.\n예식 전후로 식사 가능합니다.",
     },
     {
-      title: "버스 안내",
-      content: "서울역 출발: 오후 12:30\n강남역 출발: 오후 1:00",
-    },
-    {
       title: "식사 메뉴",
       content: "한식, 양식, 일식 뷔페\n다양한 메뉴를 준비했습니다.",
     },

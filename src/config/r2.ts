@@ -16,7 +16,7 @@ export const IMAGE_FILES = {
     "CSC_4929-.jpg",
     "CSC_5214-.jpg",
   ],
-  mainHero: "CSC_4145-.jpg",
+  mainHero: "CSC_4199-20x30.jpg",
 };
 
 // Helper function to build R2 image URL

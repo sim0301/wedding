@@ -57,7 +57,7 @@ function App() {
 
 
       <footer className="footer">
-        <p>© 2026-10-31 junhyeok & Hyejin Wedding</p>
+        <p>© 2026-10-31 Junhyeok & Hyejin Wedding</p>
       </footer>
 
       <BgMusic />

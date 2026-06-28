@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { AiOutlineMail } from "react-icons/ai";
+import { FaPhone } from "react-icons/fa";
 import type { WeddingData } from "../types";
 
 interface AccountProps {
@@ -6,15 +8,9 @@ interface AccountProps {
 }
 
 export const Account: React.FC<AccountProps> = ({ data }) => {
-  const [activeTab, setActiveTab] = useState<"groom" | "bride">("groom");
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    alert("계좌번호가 복사되었습니다.");
+  const handleCall = (phone: string) => {
+    window.location.href = `tel:${phone.replace(/[^0-9+]/g, "")}`;
   };
-
-  const accounts =
-    activeTab === "groom" ? data.accounts.groom : data.accounts.bride;
 
   return (
     <section className="account-section">
@@ -22,38 +18,104 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
       <p className="section-subtitle">마음 전하실 곳</p>
 
       <div className="account-content">
-        <div className="account-tabs">
-          <button
-            className={`tab-btn ${activeTab === "groom" ? "active" : ""}`}
-            onClick={() => setActiveTab("groom")}
-          >
-            신랑측
-          </button>
-          <button
-            className={`tab-btn ${activeTab === "bride" ? "active" : ""}`}
-            onClick={() => setActiveTab("bride")}
-          >
-            신부측
-          </button>
+        <div className="account-column">
+          <div className="account-card">
+            <p className="account-position">신랑</p>
+            <div className="account-person">
+              <span className="account-name">{data.groom.name}</span>
+              <div className="account-actions">
+                <button
+                  type="button"
+                  className="icon-btn"
+                  onClick={() => handleCall(data.groom.phone)}
+                >
+                  <FaPhone />
+                </button>
+                <button type="button" className="icon-btn disabled" disabled>
+                  <AiOutlineMail />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="account-card family-card">
+            <p className="family-title">신랑 측 혼주</p>
+            <div className="family-person">
+              <span className="family-label">아버지</span>
+              <span className="family-name">{data.parents.groom.father}</span>
+              <div className="account-actions">
+                <button type="button" className="icon-btn disabled" disabled>
+                  <FaPhone />
+                </button>
+                <button type="button" className="icon-btn disabled" disabled>
+                  <AiOutlineMail />
+                </button>
+              </div>
+            </div>
+            <div className="family-person">
+              <span className="family-label">어머니</span>
+              <span className="family-name">{data.parents.groom.mother}</span>
+              <div className="account-actions">
+                <button type="button" className="icon-btn disabled" disabled>
+                  <FaPhone />
+                </button>
+                <button type="button" className="icon-btn disabled" disabled>
+                  <AiOutlineMail />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="account-list">
-          {accounts.map((account, index) => (
-            <div key={index} className="account-item">
-              <div className="account-info">
-                <p className="account-holder">{account.holder}</p>
-                <p className="account-detail">
-                  {account.bank} {account.accountNumber}
-                </p>
+        <div className="account-divider" />
+
+        <div className="account-column">
+          <div className="account-card">
+            <p className="account-position">신부</p>
+            <div className="account-person">
+              <span className="account-name">{data.bride.name}</span>
+              <div className="account-actions">
+                <button
+                  type="button"
+                  className="icon-btn"
+                  onClick={() => handleCall(data.bride.phone)}
+                >
+                  <FaPhone />
+                </button>
+                <button type="button" className="icon-btn disabled" disabled>
+                  <AiOutlineMail />
+                </button>
               </div>
-              <button
-                className="copy-btn"
-                onClick={() => copyToClipboard(account.accountNumber)}
-              >
-                복사
-              </button>
             </div>
-          ))}
+          </div>
+
+          <div className="account-card family-card">
+            <p className="family-title">신부 측 혼주</p>
+            <div className="family-person">
+              <span className="family-label">아버지</span>
+              <span className="family-name">{data.parents.bride.father}</span>
+              <div className="account-actions">
+                <button type="button" className="icon-btn disabled" disabled>
+                  <FaPhone />
+                </button>
+                <button type="button" className="icon-btn disabled" disabled>
+                  <AiOutlineMail />
+                </button>
+              </div>
+            </div>
+            <div className="family-person">
+              <span className="family-label">어머니</span>
+              <span className="family-name">{data.parents.bride.mother}</span>
+              <div className="account-actions">
+                <button type="button" className="icon-btn disabled" disabled>
+                  <FaPhone />
+                </button>
+                <button type="button" className="icon-btn disabled" disabled>
+                  <AiOutlineMail />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
