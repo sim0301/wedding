@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineMessage } from "react-icons/ai";
 import { BiTransferAlt } from "react-icons/bi";
 import { FaPhone } from "react-icons/fa";
-import type { WeddingData } from "../types";
+import type { Account as AccountType, WeddingData } from "../types";
 
 interface AccountProps {
   data: WeddingData;
 }
 
 export const Account: React.FC<AccountProps> = ({ data }) => {
+  const [transferModalOpen, setTransferModalOpen] = useState(false);
+  const [transferAccounts, setTransferAccounts] = useState<AccountType[]>([]);
+  const [transferTitle, setTransferTitle] = useState("");
+
   const handleCall = (phone: string) => {
     window.location.href = `tel:${phone.replace(/[^0-9+]/g, "")}`;
   };
@@ -17,9 +21,21 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
     window.location.href = `sms:${phone.replace(/[^0-9+]/g, "")}`;
   };
 
-  const handleTransfer = () => {
-    const target = document.getElementById("account-subtitle");
-    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const openTransferModal = (accounts: AccountType[], title: string) => {
+    setTransferAccounts(accounts);
+    setTransferTitle(title);
+    setTransferModalOpen(true);
+  };
+
+  const closeTransferModal = () => {
+    setTransferModalOpen(false);
+    setTransferAccounts([]);
+    setTransferTitle("");
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    alert("계좌번호가 복사되었습니다.");
   };
 
   return (
@@ -53,7 +69,7 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
                 <button
                   type="button"
                   className="icon-btn transfer-icon-btn"
-                  onClick={handleTransfer}
+                  onClick={() => openTransferModal(data.accounts.groom, "신랑 측 계좌")}
                 >
                   <BiTransferAlt />
                 </button>
@@ -119,7 +135,7 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
                 <button
                   type="button"
                   className="icon-btn transfer-icon-btn"
-                  onClick={handleTransfer}
+                  onClick={() => openTransferModal(data.accounts.bride, "신부 측 계좌")}
                 >
                   <BiTransferAlt />
                 </button>
@@ -162,6 +178,38 @@ export const Account: React.FC<AccountProps> = ({ data }) => {
           </div>
         </div>
       </div>
+
+      {transferModalOpen && (
+        <div className="modal-overlay" onClick={closeTransferModal}>
+          <div className="transfer-modal" onClick={(event) => event.stopPropagation()}>
+            <button type="button" className="modal-close" onClick={closeTransferModal}>
+              ×
+            </button>
+            <div className="transfer-modal-header">
+              <p className="section-title">{transferTitle}</p>
+              <p className="transfer-modal-subtitle">계좌를 눌러서 복사해 주세요.</p>
+            </div>
+            <div className="transfer-modal-list">
+              {transferAccounts.map((account) => (
+                <div key={`${account.holder}-${account.accountNumber}`} className="transfer-modal-card">
+                  <div>
+                    <p className="transfer-modal-bank">{account.bank}</p>
+                    <p className="transfer-modal-holder">{account.holder}</p>
+                    <p className="transfer-modal-number">{account.accountNumber}</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="transfer-copy-btn"
+                    onClick={() => copyToClipboard(`${account.bank} ${account.accountNumber}`)}
+                  >
+                    복사
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

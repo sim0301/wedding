@@ -1265,6 +1265,128 @@ section {
   gap: 14px;
 }
 
+.transfer-modal {
+  position: relative;
+  width: min(520px, calc(100% - 32px));
+  max-height: 90vh;
+  margin: 0 auto;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #fff8f0 0%, #f7ede3 100%);
+  box-shadow: 0 24px 60px rgba(92, 62, 43, 0.22);
+  padding: 28px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow: hidden;
+}
+
+.transfer-modal-header {
+  text-align: center;
+}
+
+.transfer-modal-subtitle {
+  margin-top: 10px;
+  color: #7a5c44;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.transfer-modal-list {
+  display: grid;
+  gap: 14px;
+}
+
+.transfer-modal-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 16px;
+  background-color: #fffdfa;
+  border-radius: 22px;
+  border: 1px solid rgba(191, 157, 126, 0.3);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.transfer-modal-bank,
+.transfer-modal-holder,
+.transfer-modal-number {
+  margin: 0;
+}
+
+.transfer-modal-bank {
+  font-size: 14px;
+  color: #8b7355;
+  font-weight: 700;
+}
+
+.transfer-modal-holder {
+  margin-top: 4px;
+  font-size: 16px;
+  color: #4f3c2a;
+  font-weight: 700;
+}
+
+.transfer-modal-number {
+  margin-top: 4px;
+  font-size: 15px;
+  color: #5d4737;
+}
+
+.transfer-copy-btn {
+  min-width: 78px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  background-color: #8b6e4d;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.transfer-copy-btn:hover {
+  transform: translateY(-1px);
+  background-color: #a07a59;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: transparent;
+  border: none;
+  color: #5d4037;
+  font-size: 32px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  .transfer-modal {
+    padding: 20px 18px 18px;
+  }
+
+  .transfer-modal-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .transfer-copy-btn {
+    width: 100%;
+  }
+}
+
 .transfer-btn {
   display: inline-flex;
   align-items: center;
@@ -1303,8 +1425,8 @@ section {
 .account-content {
   max-width: 100%;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 18px;
   align-items: stretch;
   justify-content: center;
@@ -1324,20 +1446,10 @@ section {
   margin-bottom: 18px;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1100px) {
   .account-content {
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    align-items: flex-start;
-    justify-content: center;
     max-width: 1100px;
     padding: 10px 0 20px;
-  }
-
-  .account-column {
-    flex: 1 1 320px;
-    min-width: 280px;
   }
 }
 
