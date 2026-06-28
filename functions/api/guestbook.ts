@@ -114,8 +114,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     });
   } catch (error) {
     console.error("Error creating guestbook entry:", error);
+    const message = error instanceof Error ? error.message : String(error);
     return new Response(
-      JSON.stringify({ error: "Failed to create guestbook entry" }),
+      JSON.stringify({ error: `Failed to create guestbook entry: ${message}` }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" },

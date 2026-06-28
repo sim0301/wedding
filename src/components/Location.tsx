@@ -96,8 +96,8 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
       const interval = 100;
 
       const poll = () => {
-        if (window.kakao?.maps) {
-          initializeMap();
+        if (window.kakao?.maps?.load) {
+          window.kakao.maps.load(initializeMap);
           return;
         }
 
@@ -113,8 +113,8 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
       poll();
     };
 
-    if (window.kakao?.maps) {
-      initializeMap();
+    if (window.kakao?.maps?.load) {
+      window.kakao.maps.load(initializeMap);
       return;
     }
 
