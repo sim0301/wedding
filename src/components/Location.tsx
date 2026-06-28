@@ -90,32 +90,31 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
       setMapLoadError(false);
     };
 
-    const tryInitialize = () => {
-      if (window.kakao?.maps?.load) {
-        window.kakao.maps.load(initializeMap);
-        return true;
-      }
-      return false;
-    };
+    const waitForKakaoMaps = () => {
+      let retries = 0;
+      const maxRetries = 100;
+      const interval = 100;
 
-    const waitForKakao = () => {
-      if (tryInitialize()) return;
-
-      intervalId = window.setInterval(() => {
-        if (tryInitialize()) {
-          window.clearInterval(intervalId);
-          if (timeoutId) window.clearTimeout(timeoutId);
+      const poll = () => {
+        if (window.kakao?.maps) {
+          initializeMap();
+          return;
         }
-      }, 100);
 
-      timeoutId = window.setTimeout(() => {
-        if (intervalId) window.clearInterval(intervalId);
-        setMapLoadError(true);
-      }, 10000);
+        retries += 1;
+        if (retries >= maxRetries) {
+          setMapLoadError(true);
+          return;
+        }
+
+        window.setTimeout(poll, interval);
+      };
+
+      poll();
     };
 
-    if (window.kakao?.maps?.load) {
-      window.kakao.maps.load(initializeMap);
+    if (window.kakao?.maps) {
+      initializeMap();
       return;
     }
 
@@ -123,9 +122,7 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
     if (existingScript) {
       existingScript.addEventListener(
         "load",
-        () => {
-          waitForKakao();
-        },
+        waitForKakaoMaps,
         { once: true }
       );
       existingScript.addEventListener(
@@ -141,9 +138,10 @@ export const Location: React.FC<LocationProps> = ({ data }) => {
     const script = document.createElement("script");
     script.id = "kakao-map-script";
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_APPKEY}&autoload=false`;
-    script.async = true;
+    script.charset = "UTF-8";
+    script.async = false;
     script.onload = () => {
-      waitForKakao();
+      waitForKakaoMaps();
     };
     script.onerror = () => {
       setMapLoadError(true);
